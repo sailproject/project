@@ -3,12 +3,15 @@ include 'header.php';
 
 echo <<<_END
 
-<form action="newDisplay.php" method="post">
+<form id="form1" action="newDisplay.php" method="post">
 First Name: <input type="text" name="fname">
 Last Name: <input type="text" name="lname"><br><br>
-Username: <input type="text" name="username"><br><br>
-Password: <input type="password" name="password"><br>		
-Repassword: <input type="password" name="repassword"><br>
+Username: <input id="nameID" type="text" name="username">
+	<label id="eMName" style="color:red"></label><br><br>
+Password: <input id="pwdID" type="password" name="password">
+	<label id="eMPwd" style="color:red"></label><br>
+Repassword: <input id="pwdID2" type="password" name="repassword">
+	<label id="eMPwd2" style="color:red"></label><br>
 <input type="submit">
 </form>
 
@@ -19,6 +22,7 @@ _END;
 
 isValidName=true;
 isValidPwd=true;
+isValueMatch=true;
 idName=document.getElementById("nameID");
 idName.onblur=function()
 {
@@ -56,9 +60,26 @@ idPwd.onblur=function()
 	}
 }
 
+idPwd2=document.getElementById("pwdID2");
+idPwd2.onblur=function()
+{
+	var errorLabel=document.getElementId("eMPwd2");
+	if((idPwd2.value)!=(idPwd.value))
+	{
+		errorLabel.innerHTML="Password does not match";
+		isValidMatch=false;
+	}
+	else
+	{
+		errorLabel.innerHTML="";
+		isValidMatch=true;
+	}
+}
+
+
 function allValid()
 {
-	if(isValidName && isValidPwd)
+	if(isValidName && isValidPwd && isValidMatch)
 		return true;
 	else
 		return false;
